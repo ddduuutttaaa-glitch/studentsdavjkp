@@ -73,7 +73,7 @@ const $=s=>document.querySelector(s),esc=t=>String(t??'').replace(/[&<>"']/g,c=>
 const ci=c=>{const i=CL.indexOf(c);return i<0?99:i},cmp=(a,b)=>ci(a.cls)-ci(b.cls)||a.name.localeCompare(b.name);
 const hc=h=>HS[h]||'#7a8594',ini=n=>n.split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
 const fd=d=>d?d.split('-').reverse().join('/'):'Not set';
-function toast(m){const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(t.h);t.h=setTimeout(()=>t.className='',2200)}
+function toast(m,ms=2200){const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(t.h);t.h=setTimeout(()=>t.className='',ms)}
 const row=s=>`<button class="row" data-id="${s.id}"><span class="av" style="background:${hc(s.house)}">${esc(ini(s.name))}</span><span class="t"><b>${esc(s.name)}</b><small>${esc(s.cls)}<i>Adm ${esc(s.adm)}</i></small></span>${s.house?`<span class="chip" style="--c:${hc(s.house)}">${esc(s.house)}</span>`:''}</button>`;
 const list=a=>a.length?a.slice().sort(cmp).map(row).join(''):'<p class="cnt">No students found.</p>';
 function find(q){const k=q.toLowerCase().split(/\s+/).filter(Boolean);return S.filter(s=>{const h=(s.name+' '+s.adm+' '+s.father+' '+s.mother+' '+s.phone+' '+s.addr+' '+s.cls+' '+s.house).toLowerCase();return k.every(w=>h.includes(w))})}
@@ -121,7 +121,7 @@ function saveForm(id){const g=k=>$('#f_'+k).value.replace(/\s+/g,' ').trim(),o={
  ['name','adm','cls','house','father','mother','dob','phone','addr'].forEach(k=>o[k]=g(k));
  if(!o.name||!o.adm){toast('Name and admission number are required');return}
  if(S.some(x=>x.adm==o.adm&&x.id!=id)&&!confirm('Admission number '+o.adm+' already belongs to another student. Save anyway?'))return;
- toast('Saving...');api('upsert',{student:{...o,id:id||''}}).then(async r=>{let perr='';if(pend!==undefined){try{await api('photo',{id:r.id,data:pend});r.photo=pend?1:0;delete PH[r.id]}catch(e){perr='Saved, but photo failed: '+e.message}}const i=S.findIndex(x=>x.id==r.id);i>=0?S[i]=r:S.push(r);save();render();toast(perr||'Saved to sheet');id?detail(r.id):closeSheet()}).catch(e=>toast('Not saved: '+e.message));return
+ toast('Saving...');api('upsert',{student:{...o,id:id||''}}).then(async r=>{let perr='';if(pend!==undefined){try{await api('photo',{id:r.id,data:pend});r.photo=pend?1:0;delete PH[r.id]}catch(e){perr='Details saved, but the photo failed. '+(/Unknown request/.test(e.message)?'The Apps Script is not updated: deploy the new version.':/permission|authoriz|DriveApp|Drive/i.test(e.message)?'Drive permission missing: run authorizeDrive in Apps Script.':e.message)}}const i=S.findIndex(x=>x.id==r.id);i>=0?S[i]=r:S.push(r);save();render();perr?toast(perr,9000):toast('Saved to sheet');id?detail(r.id):closeSheet()}).catch(e=>toast('Not saved: '+e.message));return
  if(id)Object.assign(S.find(x=>x.id==id),o);else S.push({id:Math.max(0,...S.map(x=>x.id))+1,...o});
  save();toast('Saved');render();id?detail(id):closeSheet()}
 document.addEventListener('change',e=>{if(e.target.id!=='f_photo')return;const f=e.target.files[0];if(!f)return;
