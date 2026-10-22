@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17324d"><title>Student Directory</title>
+<style>
+:root{--bg:#eef1f5;--card:#fff;--ink:#14212e;--mute:#6a7a8a;--line:#e3e8ee;--pri:#17324d;--acc:#f0a81c;--bad:#c0392b;--sh:0 1px 2px rgba(20,33,46,.06),0 4px 14px rgba(20,33,46,.05)}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1620;--card:#18242f;--ink:#eef2f6;--mute:#93a3b3;--line:#263645;--pri:#0b1823;--bad:#ff8a80;--sh:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}body{font:16px/1.4 system-ui,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+header{background:var(--pri);color:#fff;padding:12px 14px 0;box-shadow:0 2px 10px rgba(0,0,0,.18);z-index:2}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:10px;max-width:720px;margin-inline:auto}
+.logo{width:38px;height:38px;border-radius:11px;background:var(--acc);color:#17324d;display:grid;place-items:center;font-weight:800}
+.ttl{flex:1;min-width:0}.ttl h1{font-size:18px;margin:0;line-height:1.1}.ttl span{font-size:12px;opacity:.7}
+.ic{width:38px;height:38px;border:0;border-radius:11px;background:rgba(255,255,255,.12);color:#fff;font-size:20px}
+#q{display:block;width:100%;max-width:720px;margin:0 auto;border:0;border-radius:12px;padding:12px 14px;font:inherit;background:rgba(255,255,255,.14);color:#fff;outline:none}
+#q::placeholder{color:rgba(255,255,255,.65)}#q:focus{background:#fff;color:#14212e}#q:focus::placeholder{color:#7a8794}
+nav{display:flex;max-width:720px;margin:6px auto 0}
+nav button{flex:1;border:0;background:none;padding:12px 0 10px;font:inherit;font-size:14px;color:rgba(255,255,255,.65);border-bottom:3px solid transparent}
+nav button.on{color:#fff;font-weight:700;border-bottom-color:var(--acc)}
+main{flex:1;overflow-y:auto;padding:14px max(12px,calc((100% - 720px)/2)) 24px}
+.cnt{color:var(--mute);font-size:13px;margin:2px 2px 10px}
+.row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:var(--card);padding:11px 12px;border-radius:14px;margin-bottom:8px;font:inherit;color:inherit;box-shadow:var(--sh)}
+.row:active,.tile:active{transform:scale(.985)}
+.av{width:44px;height:44px;border-radius:50%;color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+.t{flex:1;min-width:0}.t b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.t small{color:var(--mute);font-size:13px}.t small i{font-style:normal;margin-left:10px}
+.chip{font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);flex:none}
+.chip.w{color:#fff;background:rgba(255,255,255,.18);margin:0 3px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:flex;align-items:center;justify-content:space-between;border:0;border-radius:16px;background:var(--card);padding:16px 14px;text-align:left;font:inherit;color:inherit;box-shadow:var(--sh);border-left:6px solid var(--c,var(--acc))}
+.tile .nm{font-weight:700;font-size:16px}.tile em{font-style:normal;font-size:22px;font-weight:800;color:var(--c,var(--mute))}
+.hbtn{padding:26px 14px;background:color-mix(in srgb,var(--c) 12%,var(--card))}
+.back{border:0;background:none;color:var(--ink);font:inherit;font-weight:600;padding:6px 0 10px}
+.sheet{position:fixed;inset:0;background:var(--bg);overflow-y:auto;padding:env(safe-area-inset-top) 0 90px;z-index:5}
+.hero{background:var(--pri);color:#fff;text-align:center;padding:10px 14px 22px}.hero .back{color:#fff;display:block;text-align:left}
+.hero.sm{text-align:left;padding-bottom:14px}.hero h2{margin:8px 0 8px;font-size:22px}
+.big{width:76px;height:76px;border-radius:50%;margin:0 auto;display:grid;place-items:center;font-size:28px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.35)}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px;max-width:720px;margin:0 auto}.qa .btn{text-align:center}
+.card{background:var(--card);border-radius:16px;margin:0 14px 12px;box-shadow:var(--sh);overflow:hidden;max-width:720px}
+@media(min-width:760px){.card{margin-inline:auto}}
+.kv{padding:11px 16px;border-bottom:1px solid var(--line)}.kv:last-child{border:0}.kv small{display:block;color:var(--mute);font-size:12px}
+.acts{display:flex;gap:8px;padding:6px 14px 12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font:inherit;font-weight:600;background:var(--card);color:var(--ink);text-decoration:none}
+.btn.p{background:var(--acc);color:#1a1200;border-color:var(--acc)}.btn.d{color:var(--bad)}
+.card.pad{padding:6px 0 12px}.card h4{margin:12px 16px 0;font-size:13px;color:var(--mute);font-weight:600}
+label{display:block;padding:10px 16px 0;font-size:12px;color:var(--mute)}
+input.f,select.f,textarea.f{display:block;width:calc(100% - 32px);margin:4px 16px 0;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.savebar{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line)}.savebar .btn{width:100%}
+h3{margin:14px 2px 6px;font-size:15px}.warn{color:var(--bad)}
+#toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#14212e;color:#fff;padding:10px 16px;border-radius:20px;z-index:9;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%;text-align:center}#toast.on{opacity:1}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.bar .back{padding:0}.btn.sm{padding:8px 12px;font-size:14px;flex:none}
+</style></head><body>
+<header><div class="top"><div class="logo">SD</div><div class="ttl"><h1>Student Directory</h1><span id="st"></span></div><button class="ic" data-act="pull" aria-label="Refresh">&#8635;</button></div>
+<input id="q" type="search" placeholder="Search name, admission no., parent, phone" autocomplete="off">
+<nav id="nav"><button data-tab="s">Students</button><button data-tab="c">Classes</button><button data-tab="h">Houses</button><button data-tab="m">More</button></nav></header>
+<main id="main"></main>
+<div id="sheet" class="sheet" hidden></div><div id="toast"></div><input type="file" id="file" accept=".json" hidden>
+<script>
+const SEED=[];
+const CL=['Nursery','LKG','UKG','STD I','STD II','STD III','STD IV','STD V','STD VI','STD VII','STD VIII','STD IX','STD X','STD XI','STD XII'];
+const HS={Hansraj:'#b3261e',Aurobindo:'#1f5fa8',Ramakrishna:'#2e7d4f',Vivekananda:'#c77700'};
+let CFG=null;try{CFG=JSON.parse(localStorage.getItem('sd_cfg'))}catch(e){}
+const KEY='student_dir_cloud';
+let S=null;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!Array.isArray(S))S=[];
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Could not save on this device')}};
+let st={tab:'s',q:'',cls:null,house:null},sync='Loading';
+async function api(op,extra={}){const r=await fetch(CFG.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({key:CFG.key,op,...extra})});const j=await r.json();if(!j.ok)throw new Error(j.error||'Failed');return j.data}
+async function pull(quiet){if(!CFG)return;try{S=await api('list');save();sync='Synced '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});render();if(!quiet)toast('Up to date')}catch(e){sync='Offline, showing last saved data';render();if(!quiet)toast('Could not reach the sheet: '+e.message)}}
+function conn(){const url=prompt('Paste the Web app URL from Apps Script (ends with /exec)');if(!url)return;const key=prompt('Enter the passcode');if(!key)return;const old=CFG;CFG={url:url.trim(),key:key.trim()};api('list').then(d=>{localStorage.setItem('sd_cfg',JSON.stringify(CFG));localStorage.setItem(KEY,JSON.stringify(d));location.reload()}).catch(e=>{CFG=old;toast('Could not connect: '+e.message)})}
+function del(id){api('delete',{id}).then(()=>{S=S.filter(x=>x.id!=id);save();closeSheet();render();toast('Deleted from sheet')}).catch(e=>toast('Not deleted: '+e.message))}
+const $=s=>document.querySelector(s),esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ci=c=>{const i=CL.indexOf(c);return i<0?99:i},cmp=(a,b)=>ci(a.cls)-ci(b.cls)||a.name.localeCompare(b.name);
+const hc=h=>HS[h]||'#7a8594',ini=n=>n.split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+const fd=d=>d?d.split('-').reverse().join('/'):'Not set';
+function toast(m){const t=$('#toast');t.textContent=m;t.className='on';clearTimeout(t.h);t.h=setTimeout(()=>t.className='',2200)}
+const row=s=>`<button class="row" data-id="${s.id}"><span class="av" style="background:${hc(s.house)}">${esc(ini(s.name))}</span><span class="t"><b>${esc(s.name)}</b><small>${esc(s.cls)}<i>Adm ${esc(s.adm)}</i></small></span>${s.house?`<span class="chip" style="--c:${hc(s.house)}">${esc(s.house)}</span>`:''}</button>`;
+const list=a=>a.length?a.slice().sort(cmp).map(row).join(''):'<p class="cnt">No students found.</p>';
+function find(q){const k=q.toLowerCase().split(/\s+/).filter(Boolean);return S.filter(s=>{const h=(s.name+' '+s.adm+' '+s.father+' '+s.mother+' '+s.phone+' '+s.addr+' '+s.cls+' '+s.house).toLowerCase();return k.every(w=>h.includes(w))})}
+function issues(){const by={};S.forEach(s=>(by[s.adm]??=[]).push(s));
+return{dup:Object.entries(by).filter(([a,v])=>v.length>1),noh:S.filter(s=>!s.house),bp:S.filter(s=>!/^\d{10}$/.test(s.phone))}}
+function render(){
+ $('#st').textContent=CFG?sync:'Not connected';
+ if(!CFG){$('#main').innerHTML='<h3>Connect to your Google Sheet</h3><p class="cnt">This app reads and saves students in your Google Sheet, so every phone shows the same data.</p><div class="acts"><button class="btn p" data-act="conn">Connect to Google Sheet</button></div>';return}
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab==st.tab));
+ let h='';
+ if(st.tab=='s'){const a=st.q.trim()?find(st.q):S;h=`<div class="cnt">${a.length} of ${S.length} students</div>`+list(a)}
+ else if(st.tab=='c'){
+  if(st.cls==null)h='<div class="bar"><span class="cnt" style="margin:0">Tap a class to open it</span><button class="btn sm" data-pdf="c:">PDF of all classes</button></div><div class="grid">'+CL.map(c=>{const n=S.filter(s=>s.cls==c).length;return`<button class="tile" data-cls="${c}"><span class="nm">${c}</span><em>${n}</em></button>`}).join('')+'</div>';
+  else{const a=S.filter(s=>s.cls==st.cls);h=`<div class="bar"><button class="back" data-act="back">&larr; All classes</button><button class="btn sm" data-pdf="c:${st.cls}">Download PDF</button></div><div class="cnt">${st.cls}: ${a.length} students</div>`+list(a)}}
+ else if(st.tab=='h'){
+  if(st.house==null)h='<div class="bar"><span class="cnt" style="margin:0">Tap a house to open it</span><button class="btn sm" data-pdf="h:">PDF of all houses</button></div><div class="grid">'+[...Object.keys(HS),''].map(x=>{const n=S.filter(s=>s.house==x).length;return`<button class="tile hbtn" style="--c:${hc(x)}" data-house="${x||'-'}"><span class="nm">${x?x+' House':'No house yet'}</span><em>${n}</em></button>`}).join('')+'</div>';
+  else{const k=st.house=='-'?'':st.house,a=S.filter(s=>s.house==k);h=`<div class="bar"><button class="back" data-act="back">&larr; All houses</button><button class="btn sm" data-pdf="h:${st.house}">Download PDF</button></div><div class="cnt">${k?k+' House':'No house yet'}: ${a.length} students</div>`+list(a)}}
+ else{const i=issues(),n=i.dup.length+i.noh.length+i.bp.length;
+  h=`<h3>Manage</h3><div class="acts"><button class="btn p" data-act="add">Add student</button><button class="btn" data-act="csv">Download CSV</button></div>
+  <div class="acts"><button class="btn" data-act="pull">Refresh from sheet</button><button class="btn d" data-act="disc">Disconnect this phone</button></div>
+  <h3>Data check ${n?'':'(all clear)'}</h3>`;
+  if(i.dup.length)h+=`<div class="cnt warn">Same admission number used more than once (${i.dup.length})</div>`+i.dup.map(([a,v])=>v.map(row).join('')).join('');
+  if(i.bp.length)h+=`<div class="cnt warn">Phone number is not 10 digits (${i.bp.length})</div>`+i.bp.map(row).join('');
+  if(i.noh.length)h+=`<div class="cnt warn">No house assigned (${i.noh.length}). Open a student and tap Edit.</div>`+i.noh.sort(cmp).map(row).join('')}
+ $('#main').innerHTML=h}
+function sheet(h){const e=$('#sheet');e.innerHTML=h;e.hidden=false;e.scrollTop=0}
+const closeSheet=()=>{$('#sheet').hidden=true};
+function detail(id){const s=S.find(x=>x.id==id);if(!s)return;
+ const f=(l,v)=>`<div class="kv"><small>${l}</small>${esc(v)||'Not set'}</div>`;
+ sheet(`<div class="hero"><button class="back" data-act="close">&larr; Back</button><div class="big" style="background:${hc(s.house)}">${esc(ini(s.name))}</div><h2>${esc(s.name)}</h2><span class="chip w">${esc(s.cls)}</span>${s.house?`<span class="chip w">${esc(s.house)} House</span>`:''}<span class="chip w">Adm ${esc(s.adm)}</span></div>
+ <div class="qa"><a class="btn p" href="tel:${esc(s.phone)}">Call</a><a class="btn" href="https://wa.me/91${esc(s.phone)}" target="_blank">WhatsApp</a><button class="btn" data-edit="${s.id}">Edit</button></div>
+ <div class="card">${f("Father's name",s.father)}${f("Mother's name",s.mother)}${f('Date of birth',fd(s.dob))}${f('Phone',s.phone)}${f('Address',s.addr)}</div>
+ <div class="acts"><button class="btn d" data-del="${s.id}">Delete student</button></div>`)}
+function form(id){const s=id?S.find(x=>x.id==id):{cls:CL[0],house:''};
+ const i=(k,l,t='text')=>`<label>${l}</label><input class="f" id="f_${k}" type="${t}" value="${esc(s[k]||'')}">`;
+ sheet(`<div class="hero sm"><button class="back" data-act="${id?'back2':'close'}" data-id2="${id||''}">&larr; Cancel</button><h2>${id?'Edit student':'Add student'}</h2></div><div style="height:14px"></div>
+ <div class="card pad"><h4>Student</h4>${i('name',"Student's name")}${i('adm','Admission number')}
+ <label>Class</label><select class="f" id="f_cls">${CL.map(c=>`<option ${c==s.cls?'selected':''}>${c}</option>`).join('')}</select>
+ <label>House</label><select class="f" id="f_house"><option value="">None</option>${Object.keys(HS).map(x=>`<option value="${x}" ${x==s.house?'selected':''}>${x} House</option>`).join('')}</select>${i('dob','Date of birth','date')}</div>
+ <div class="card pad"><h4>Family and contact</h4>${i('father',"Father's name")}${i('mother',"Mother's name")}${i('phone','Phone number','tel')}
+ <label>Address</label><textarea class="f" id="f_addr" rows="2">${esc(s.addr||'')}</textarea></div>
+ <div class="savebar"><button class="btn p" data-save="${id||''}">Save changes</button></div>`)}
+function saveForm(id){const g=k=>$('#f_'+k).value.replace(/\s+/g,' ').trim(),o={};
+ ['name','adm','cls','house','father','mother','dob','phone','addr'].forEach(k=>o[k]=g(k));
+ if(!o.name||!o.adm){toast('Name and admission number are required');return}
+ if(S.some(x=>x.adm==o.adm&&x.id!=id)&&!confirm('Admission number '+o.adm+' already belongs to another student. Save anyway?'))return;
+ toast('Saving...');api('upsert',{student:{...o,id:id||''}}).then(r=>{const i=S.findIndex(x=>x.id==r.id);i>=0?S[i]=r:S.push(r);save();render();toast('Saved to sheet');id?detail(r.id):closeSheet()}).catch(e=>toast('Not saved: '+e.message));return
+ if(id)Object.assign(S.find(x=>x.id==id),o);else S.push({id:Math.max(0,...S.map(x=>x.id))+1,...o});
+ save();toast('Saved');render();id?detail(id):closeSheet()}
+function loadPdf(){return new Promise((ok,no)=>{if(window.jspdf&&window.jspdf.jsPDF.API.autoTable)return ok();
+ const add=(u,cb)=>{const s=document.createElement('script');s.src=u;s.onload=cb;s.onerror=()=>no(new Error('Internet is needed to create the PDF'));document.head.appendChild(s)};
+ add('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',()=>add('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js',ok))})}
+async function pdf(kind,key){
+ let groups,file;
+ if(kind=='c'){const ks=key?[key]:CL.filter(c=>S.some(s=>s.cls==c));groups=ks.map(c=>({title:'Class '+c,rows:S.filter(s=>s.cls==c).sort(cmp)}));file=key?'Class_'+key.replace(/\s+/g,'_'):'All_Classes'}
+ else{const ks=key?[key=='-'?'':key]:[...Object.keys(HS),''].filter(h=>S.some(s=>s.house==h));groups=ks.map(h=>({title:h?h+' House':'No house assigned',rows:S.filter(s=>s.house==h).sort(cmp)}));file=key?(key=='-'?'No_House':'House_'+key):'All_Houses'}
+ if(!groups.length||!groups.some(g=>g.rows.length)){toast('No students to print');return}
+ toast('Preparing PDF...');
+ try{await loadPdf()}catch(e){toast(e.message);return}
+ const doc=new window.jspdf.jsPDF({orientation:'landscape',unit:'pt',format:'a4'}),today=new Date().toLocaleDateString('en-GB');let title='';
+ groups.forEach((g,i)=>{if(i)doc.addPage();title=g.title+': '+g.rows.length+' students';
+  doc.autoTable({startY:84,margin:{top:84,left:40,right:40,bottom:40},theme:'striped',styles:{fontSize:9,cellPadding:4},headStyles:{fillColor:[23,50,77]},
+   head:[['#','Adm No','Student Name',"Father's Name","Mother's Name",'DOB','Phone',kind=='c'?'House':'Class']],
+   body:g.rows.map((s,n)=>[n+1,s.adm,s.name,s.father,s.mother,fd(s.dob),s.phone,kind=='c'?s.house:s.cls]),
+   didDrawPage:()=>{doc.setTextColor(20,33,46);doc.setFontSize(16);doc.text('Student Directory',40,42);doc.setFontSize(12);doc.text(title,40,64);doc.setFontSize(9);doc.text('Generated '+today,802,42,{align:'right'})}})});
+ const n=doc.getNumberOfPages();for(let i=1;i<=n;i++){doc.setPage(i);doc.setFontSize(9);doc.setTextColor(110);doc.text('Page '+i+' of '+n,802,570,{align:'right'})}
+ doc.save(file+'.pdf');toast('PDF downloaded')}
+function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
+function csv(){const c=['Class','Student Name','Admission No','House','Father','Mother','Date of Birth','Phone','Address'],k=['cls','name','adm','house','father','mother','dob','phone','addr'];
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ download('students.csv','\ufeff'+[c.map(q).join(','),...S.slice().sort(cmp).map(s=>k.map(x=>q(s[x])).join(','))].join('\r\n'),'text/csv')}
+document.addEventListener('click',e=>{const t=e.target.closest('button,a');if(!t)return;const d=t.dataset;
+ if(d.tab){st.tab=d.tab;st.cls=null;st.house=null;render()}
+ else if(d.cls){st.cls=d.cls;render()}else if(d.house){st.house=d.house;render()}
+ else if(d.pdf!==undefined){const k=d.pdf.indexOf(':');pdf(d.pdf.slice(0,k),d.pdf.slice(k+1))}
+ else if(d.id)detail(d.id);else if(d.edit)form(d.edit);else if(d.save!==undefined)saveForm(d.save);
+ else if(d.del){const s=S.find(x=>x.id==d.del);if(confirm('Delete '+s.name+' from the Google Sheet for everyone? This cannot be undone.'))del(d.del)}
+ else if(d.act=='back'){st.cls=null;st.house=null;render()}else if(d.act=='close')closeSheet();else if(d.act=='back2')detail(d.id2);
+ else if(d.act=='add')form();else if(d.act=='pull')pull();else if(d.act=='conn')conn();else if(d.act=='disc'){if(confirm('Disconnect this phone from the sheet?')){localStorage.removeItem('sd_cfg');localStorage.removeItem(KEY);location.reload()}}else if(d.act=='csv')csv();
+});
+$('#file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const a=JSON.parse(r.result);if(!Array.isArray(a)||!a[0]?.name)throw 0;S=a;save();render();toast('Backup restored')}catch(x){toast('That file is not a valid backup')}};r.readAsText(f);e.target.value=''});
+$('#q').addEventListener('input',e=>{st.q=e.target.value;st.tab='s';st.cls=st.house=null;render()});
+render();pull(true);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull(true)});setInterval(()=>{if(!document.hidden&&$('#sheet').hidden)pull(true)},60000);
+</script></body></html>
